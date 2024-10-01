@@ -49,7 +49,7 @@ class canBo{
 			cin>>ngayVao[0]>>ngayVao[1]>>ngayVao[2];
 			cin.ignore();
 		}
-		void xuat(){
+		void xuat() const{
 			cout<<"Ma can bo: "<<maCanBo<<endl;
 			cout<<"Ho ten: "<<hoTen<<endl;
 			cout<<"Ngay vao: "<<ngayVao[0]<<"/"<<ngayVao[1]<<"/"<<ngayVao[2]<<endl;
@@ -58,15 +58,69 @@ class canBo{
 };
 
 
+class GiangVien : public canBo{
+	private:
+		string donvi;
+		int hesoluong;
+		int phucap;
+	public:
+		GiangVien(){
+		}
+		GiangVien(string maCanBo, string hoTen, int ngay, int thang, int nam,string donvi, int hesoluong, int phucap)
+		:canBo(maCanBo,hoTen,ngay,thang,nam){
+			this->donvi = donvi;
+			this->hesoluong = hesoluong;
+			this->phucap = phucap;
+		}
+		~GiangVien(){
+		}
+		void setDonVi( const &donvi){
+			this->donvi = donvi;
+		}
+		void sethesoluong (const &hesoluong){
+			this->hesoluong = hesoluong;
+		}
+		void setphucap( const &phucap){
+			this->phucap = phucap;
+		}
+		string getDonvi(){
+			return donvi;
+		}
+		int gethesoluong(){
+			return hesoluong;
+		}
+		int getphucap(){
+			return phucap;
+		}
+		int tinhLuong() const {
+        	return hesoluong * 1490000 + phucap;
+   		 }
+		void nhap(){
+			canBo::nhap();
+			cout<<"Nhap don vi cua can bo: ";
+			getline(cin,donvi);
+			cout<<"Nhap he so luong ";
+			cin>>hesoluong;
+			cout<<"Nhap phu cap: ";
+			cin>>phucap;
+			cin.ignore();
+		}
+		void xuat() const {
+	        canBo::xuat();
+	        cout << "Don vi: " << donvi << endl;
+	        cout << "He so luong: " << hesoluong << endl;
+	        cout << "Phu cap chuc vu: " << phucap << endl;
+	        cout << "Tien luong: " << tinhLuong() << " VND" << endl;
+    }
+		 
+};
 
 
 int main(){
-	canBo *cb = new canBo;
-	cout<<"Nhap thong tin canBo: "<<endl;
-	cb->nhap();
-	cb->xuat();
-	
-	
-	
+	GiangVien giangVien;
+    cout << "Nhap thong tin giang vien:" << endl;
+    giangVien.nhap();
+    cout << "\nThong tin giang vien:" << endl;
+    giangVien.xuat();
 	return 0;
 }
