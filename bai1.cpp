@@ -1,4 +1,4 @@
-#include<iostream>
+#include<bits/stdc++.h>
 
 using namespace std;
 
@@ -54,7 +54,11 @@ class canBo{
 			cout<<"Ho ten: "<<hoTen<<endl;
 			cout<<"Ngay vao: "<<ngayVao[0]<<"/"<<ngayVao[1]<<"/"<<ngayVao[2]<<endl;
 		}
-
+		bool operator > (const canBo &a) const {
+            if (ngayVao[2] != a.ngayVao[2]) return ngayVao[2] > a.ngayVao[2];
+            if (ngayVao[1] != a.ngayVao[1]) return ngayVao[1] > a.ngayVao[1];
+            return ngayVao[0] > a.ngayVao[0];
+        }
 };
 
 
@@ -99,7 +103,7 @@ class GiangVien : public canBo{
 			canBo::nhap();
 			cout<<"Nhap don vi cua can bo: ";
 			getline(cin,donvi);
-			cout<<"Nhap he so luong ";
+			cout<<"Nhap he so luong: ";
 			cin>>hesoluong;
 			cout<<"Nhap phu cap: ";
 			cin>>phucap;
@@ -111,16 +115,46 @@ class GiangVien : public canBo{
 	        cout << "He so luong: " << hesoluong << endl;
 	        cout << "Phu cap chuc vu: " << phucap << endl;
 	        cout << "Tien luong: " << tinhLuong() << " VND" << endl;
-    }
+   	 	}
+   	 	
 		 
 };
 
 
 int main(){
-	GiangVien giangVien;
-    cout << "Nhap thong tin giang vien:" << endl;
-    giangVien.nhap();
-    cout << "\nThong tin giang vien:" << endl;
-    giangVien.xuat();
+	int count = 0;
+	int n;
+	cout<<"Nhap so luong giang vien: ";
+	cin>>n;
+	cin.ignore();
+	GiangVien giangVien[50];
+	for( int i = 0; i<n; i++){
+		cout << "\nNhap thong tin giang vien thu " << i + 1 << ":\n";
+		giangVien[i].nhap();
+		count++;
+	}
+	cout<<"\n\nThong tin cac can bo: \n";
+   	for( int i = 0; i<n; i++){
+		giangVien[i].xuat();
+	}
+	
+	
+	for( int i=0; i<n-1; i++){
+		for( int j=i+1; j<n; j++){
+			if( giangVien[i] > giangVien[j]){
+				swap(giangVien[i],giangVien[j]);
+			}
+		}
+	}
+	cout<<"\n\nThong tin cac can bo sau khi sap xep: \n";
+	for( int i = 0; i<n; i++){
+		giangVien[i].xuat();
+	}
+	cout<<"Luong trung binh cua tat ca cac can bo: ";
+	int sum = 0;
+	for( int i =0; i<n; i++){
+		sum+= giangVien[i].tinhLuong();
+	}
+	cout<<sum/count<<" VND"<<endl;
 	return 0;
 }
