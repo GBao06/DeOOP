@@ -1,160 +1,121 @@
 #include<bits/stdc++.h>
-
 using namespace std;
 
-class canBo{
-	private:
-		string maCanBo,hoTen;
-		int ngayVao[3];
-	public:
-		canBo(){
-		}
-		canBo( string maCanBo, string hoten, int ngay, int thang, int nam){
-			this->maCanBo = maCanBo;
-			this->hoTen = hoTen;
-			ngayVao[0] = ngay;
-			ngayVao[1] = thang;
-			ngayVao[2] = nam;
-		}
-		~canBo(){
-		}
-		void setMaCanBo(const string &maCanBo){
-			this->maCanBo = maCanBo;
-		}
-		void setHoTen(const string &hoTen){
-			this->hoTen = hoTen;
-		}
-		void setNgayVao( int ngay, int thang, int nam){
-			ngayVao[0] = ngay;
-			ngayVao[1] = thang;
-			ngayVao[2] = nam;
-		}
-		string getMaCanBo() const{ 
-			return maCanBo;
-		}
-		string gethoTen( ) const{
-			return hoTen;
-		}
-		void getNgayVao( int &ngay, int &thang, int &nam) const{
-			 ngay = ngayVao[0];
-			 ngay = ngayVao[1];
-			 ngay = ngayVao[2];
-		}
-		void nhap(){
-			cout<<"Nhap ma can bo: ";
-			getline(cin,maCanBo);
-			cout<<"Nhap ho ten: ";
-			getline(cin, hoTen);
-			cout<<"Nhap ngay vao: ";
-			cin>>ngayVao[0]>>ngayVao[1]>>ngayVao[2];
-			cin.ignore();
-		}
-		void xuat() const{
-			cout<<"Ma can bo: "<<maCanBo<<endl;
-			cout<<"Ho ten: "<<hoTen<<endl;
-			cout<<"Ngay vao: "<<ngayVao[0]<<"/"<<ngayVao[1]<<"/"<<ngayVao[2]<<endl;
-		}
-		bool operator > (const canBo &a) const {
-            if (ngayVao[2] != a.ngayVao[2]) return ngayVao[2] > a.ngayVao[2];
-            if (ngayVao[1] != a.ngayVao[1]) return ngayVao[1] > a.ngayVao[1];
-            return ngayVao[0] > a.ngayVao[0];
-        }
+class nguoi {
+private:
+    string hodem, ten;
+    int ngaysinh[3];  
+public:
+    nguoi() {
+        hodem = ten = "";
+        ngaysinh[0] = ngaysinh[1] = ngaysinh[2] = 0;
+    }
+    nguoi(string hodem, string ten, int ngay, int thang, int nam) {
+        this->hodem = hodem;
+        this->ten = ten;
+        this->ngaysinh[0] = ngay;
+        this->ngaysinh[1] = thang;
+        this->ngaysinh[2] = nam;
+    }
+    nguoi(const nguoi &x) {
+        this->hodem = x.hodem;
+        this->ten = x.ten;
+        this->ngaysinh[0] = x.ngaysinh[0];
+        this->ngaysinh[1] = x.ngaysinh[1];
+        this->ngaysinh[2] = x.ngaysinh[2];
+    }
+
+
+    void nhap() {
+        cin.ignore();
+        cout << "Nhap ho dem: ";
+        getline(cin, hodem);
+        cout << "Nhap ten: ";
+        getline(cin, ten);
+        cout << "Nhap ngay sinh: ";
+        cin >> ngaysinh[0] >> ngaysinh[1] >> ngaysinh[2];
+    }
+
+
+    void xuat() const {
+        cout << "Ho va ten: " << hodem << " " << ten << endl;
+        cout << "Ngay sinh: " << ngaysinh[0] << "/" << ngaysinh[1] << "/" << ngaysinh[2] << endl;
+    }
+
+
+    bool operator > (const nguoi &x) const {
+        if (ten != x.ten) return ten > x.ten; 
+        return hodem > x.hodem;  
+    }
 };
 
-
-class GiangVien : public canBo{
-	private:
-		string donvi;
-		int hesoluong;
-		int phucap;
-	public:
-		GiangVien(){
-		}
-		GiangVien(string maCanBo, string hoTen, int ngay, int thang, int nam,string donvi, int hesoluong, int phucap)
-		:canBo(maCanBo,hoTen,ngay,thang,nam){
-			this->donvi = donvi;
-			this->hesoluong = hesoluong;
-			this->phucap = phucap;
-		}
-		~GiangVien(){
-		}
-		void setDonVi( const &donvi){
-			this->donvi = donvi;
-		}
-		void sethesoluong (const &hesoluong){
-			this->hesoluong = hesoluong;
-		}
-		void setphucap( const &phucap){
-			this->phucap = phucap;
-		}
-		string getDonvi(){
-			return donvi;
-		}
-		int gethesoluong(){
-			return hesoluong;
-		}
-		int getphucap(){
-			return phucap;
-		}
-		int tinhLuong() const {
-        	return hesoluong * 1490000 + phucap;
-   		 }
-		void nhap(){
-			canBo::nhap();
-			cout<<"Nhap don vi cua can bo: ";
-			getline(cin,donvi);
-			cout<<"Nhap he so luong: ";
-			cin>>hesoluong;
-			cout<<"Nhap phu cap: ";
-			cin>>phucap;
-			cin.ignore();
-		}
-		void xuat() const {
-	        canBo::xuat();
-	        cout << "Don vi: " << donvi << endl;
-	        cout << "He so luong: " << hesoluong << endl;
-	        cout << "Phu cap chuc vu: " << phucap << endl;
-	        cout << "Tien luong: " << tinhLuong() << " VND" << endl;
-   	 	}
-   	 	
-		 
+class sinhvien : public nguoi {
+private:
+    string masv;
+    double dtb; 
+public:
+    sinhvien() {
+        masv = "";
+        dtb = 0.0;
+    }
+    sinhvien(string masv, double dtb, string hodem, string ten, int ngay, int thang, int nam) 
+        : nguoi(hodem, ten, ngay, thang, nam) {
+        this->masv = masv;
+        this->dtb = dtb;
+    }
+    void nhap() {
+        nguoi::nhap();
+        cout << "Nhap ma sinh vien: ";
+        cin >> masv;
+        cout << "Nhap diem trung binh: ";
+        cin >> dtb;
+    }
+    void xuat() const {
+        nguoi::xuat();
+        cout << "Ma sinh vien: " << masv << endl;
+        cout << "Diem trung binh: " << dtb << endl;
+    }
+    string getMsv() const { return masv; }
+    double getDtb() const { return dtb; }
 };
 
-
-int main(){
-	int count = 0;
-	int n;
-	cout<<"Nhap so luong giang vien: ";
-	cin>>n;
-	cin.ignore();
-	GiangVien giangVien[50];
-	for( int i = 0; i<n; i++){
-		cout << "\nNhap thong tin giang vien thu " << i + 1 << ":\n";
-		giangVien[i].nhap();
-		count++;
-	}
-	cout<<"\n\nThong tin cac can bo: \n";
-   	for( int i = 0; i<n; i++){
-		giangVien[i].xuat();
-	}
-	
-	
-	for( int i=0; i<n-1; i++){
-		for( int j=i+1; j<n; j++){
-			if( giangVien[i] > giangVien[j]){
-				swap(giangVien[i],giangVien[j]);
-			}
-		}
-	}
-	cout<<"\n\nThong tin cac can bo sau khi sap xep: \n";
-	for( int i = 0; i<n; i++){
-		giangVien[i].xuat();
-	}
-	cout<<"Luong trung binh cua tat ca cac can bo: ";
-	int sum = 0;
-	for( int i =0; i<n; i++){
-		sum+= giangVien[i].tinhLuong();
-	}
-	cout<<sum/count<<" VND"<<endl;
-	return 0;
+bool compare(const sinhvien &a, const sinhvien &b) {
+    return a > b; 
 }
+
+int main() {
+    cout << "Nhap so luong sinh vien: ";
+    int n; cin >> n;
+    vector<sinhvien> v(n);
+    for (int i = 0; i < n; i++) {
+        cout << "Nhap thong tin sinh vien " << i + 1 << ":\n";
+        v[i].nhap();
+    }
+//    cout << "\n----------------------\n";
+//    cout << "Danh sach sinh vien: \n";
+//    for (int i = 0; i < n; i++) {
+//        cout << "Sinh vien " << i + 1 << ":\n";
+//        v[i].xuat();
+//    }
+
+
+    sort(v.begin(), v.end(), compare);
+
+    cout << "\n----------------------\n";
+    cout << "Danh sach sinh vien sau khi sap xep theo ho dem:\n";
+    for (int i = 0; i < n; i++) {
+        cout << "Sinh vien " << i + 1 << ":\n";
+        v[i].xuat();
+    }
+    cout << "\n----------------------\n";
+    cout << "Nhung sinh vien co diem trung binh cao nhat: \n";
+	
+	double max_dtb = v[0].getDtb();
+	for ( int i=0; i<n;i++){
+		if( v[i].getDtb() == max_dtb){
+			v[i].xuat();
+		}
+	}
+    return 0;
+}
+
